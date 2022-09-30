@@ -12,6 +12,7 @@ CREATE TABLE "users" (
 CREATE TABLE "projects" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
     "resume" TEXT NOT NULL,
     "importantInfos" TEXT NOT NULL,
     "startDate" TEXT NOT NULL,
@@ -52,17 +53,20 @@ CREATE TABLE "clientsUsers" (
 );
 
 -- CreateTable
-CREATE TABLE "briefings" (
+CREATE TABLE "guidances" (
     "id" SERIAL NOT NULL,
     "projectId" INTEGER NOT NULL,
     "question" TEXT NOT NULL,
     "answer" TEXT NOT NULL,
 
-    CONSTRAINT "briefings_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "guidances_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "projects_imageUrl_key" ON "projects"("imageUrl");
 
 -- AddForeignKey
 ALTER TABLE "projects" ADD CONSTRAINT "projects_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -80,4 +84,4 @@ ALTER TABLE "clientsUsers" ADD CONSTRAINT "clientsUsers_userId_fkey" FOREIGN KEY
 ALTER TABLE "clientsUsers" ADD CONSTRAINT "clientsUsers_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "clients"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "briefings" ADD CONSTRAINT "briefings_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "guidances" ADD CONSTRAINT "guidances_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
