@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
+  projecsUsers    ProjectUser[]
+  clientsUsers    ClientUser[]
+
+  @@map("users")
+}
+
+model Project {
+  id               Int        @id @default(autoincrement())
+  title            String 
+  resume           String
+  importantInfos   String
+  startDate        String
+  limitDate        String
+  client           Client     @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId         Int
+  value            Int        @default(0)
+  isDone           Boolean    @default(false)
+
+  projectsUsers    ProjectUser[]
+  guidances        Guidance[]
+
+  @@map("projects")
+}
+
+model ProjectUser {
+  id              Int        @id @default(autoincrement())
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          Int
+  project         Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId       Int
+
+  @@map("projectsUsers")
+}
+
+model Client {
+  id            Int    @id @default(autoincrement())
+  name          String
+  email       String 
+  phone       String 
+  
+  projects      Project[]
+  clientsUsers  ClientUser[]
+
+  @@map("clients")
+}
+
+model ClientUser {
+  id          Int    @id @default(autoincrement())
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  client      Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId    Int
+
+  @@map("clientsUsers")
+}
+
+model Guidance {
+  id       Int    @id @default(autoincrement())
+  project  Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+  question  String
+  answer    String
+
+  @@map("guidances")
+}
