@@ -30,7 +30,7 @@ describe('🌱 ~ POST /signup', () => {
     expect(selectCreatedUser.email).toEqual(user.email);
   });
 
-  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE', async () => {
+  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE-invalid user schema (name)', async () => {
     const user = userBodyFactory();
     const userWithoutName = {
       ...user,
@@ -42,7 +42,7 @@ describe('🌱 ~ POST /signup', () => {
     expect(response.status).toEqual(422);
   });
 
-  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE', async () => {
+  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE invalid user schema (email)', async () => {
     const user = userBodyFactory();
     const userWithoutEmail = {
       ...user,
@@ -54,7 +54,7 @@ describe('🌱 ~ POST /signup', () => {
     expect(response.status).toEqual(422);
   });
 
-  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE', async () => {
+  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE invalid user schema (password)', async () => {
     const user = userBodyFactory();
     const userWithoutPassword = {
       ...user,
@@ -80,7 +80,7 @@ describe('🌱 ~ POST /signin', () => {
     expect(loginResponse.status).toEqual(200);
   });
 
-  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE', async () => {
+  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE invalid user schema (email)', async () => {
     const user = userBodyFactory();
     await userFactory(user);
 
@@ -89,7 +89,7 @@ describe('🌱 ~ POST /signin', () => {
     expect(loginResponse.status).toEqual(422);
   });
 
-  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE', async () => {
+  it('✨ 422 ~ Fail create a new account - UNPROCESSABLE invalid user schema (password)', async () => {
     const user = userBodyFactory();
     await userFactory(user);
 
