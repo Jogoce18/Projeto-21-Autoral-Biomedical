@@ -1,5 +1,6 @@
 import { Project } from '@prisma/client';
 import projectRepository from '../repositories/maintenanceRepository.js';
+import maintenanceRouter from '../routers/maintenanceRouter.js';
 import { notFoundError } from '../utils/errorUtils.js';
 
 export type ProjectData = Omit<Project, 'id'>
